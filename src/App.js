@@ -1,23 +1,46 @@
 import logo from './logo.svg';
 import './App.css';
+import React , { useState } from "react"
 
 function App() {
+  const [input, setInput]=useState("")
+  const [list, setList]=useState([]);
+	const handleList=(e)=>{
+    if(!input){
+
+    }else{
+      setList([...list, input]);
+     setInput("")
+    }
+		
+	}
+  const handleInput=(e)=>{
+    setInput(e.target.value)
+  }
+  const deleteItem=(id)=>{
+    const updateItems=list.filter((ele,idx)=>{
+      return idx!==id;
+    })
+    setList(updateItems)
+  }
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>Todo List</h1>
+      <div>
+		    <input type="text" placeholder='Add task' id="task" value={input} onChange={handleInput} ></input>
+		    <button id="btn" onClick={handleList}>Add</button>
+		</div>
+    <div>
+      
+        {list.map((k,i)=>{
+          
+            return <div className='flex' key={i}>
+              <li>{k}</li>
+              <button className='d' onClick={()=>deleteItem(i)}>Delete</button>
+          </div>
+        })}
+      
+    </div>
     </div>
   );
 }
